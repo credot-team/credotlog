@@ -5,7 +5,7 @@
   "types": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc --build --clean & tsc"
   },
   "devDependencies": {
     "typescript": "^4.3.5"
