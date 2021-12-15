@@ -13,8 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.levellog = exports.colorlog = exports.log = exports.init = void 0;
+const http_1 = __importDefault(require("http"));
+const https_1 = __importDefault(require("https"));
 const axios_1 = __importDefault(require("axios"));
 const chalk_1 = __importDefault(require("chalk"));
+const axios = axios_1.default.create({
+    httpAgent: new http_1.default.Agent({ keepAlive: true }),
+    httpsAgent: new https_1.default.Agent({ keepAlive: true }),
+});
 let graylogURL = '';
 let host = '';
 /**
@@ -53,7 +59,7 @@ const log = (level, message, others) => __awaiter(void 0, void 0, void 0, functi
     exports.levellog(`${message} ${JSON.stringify(others)}`, l);
     let body = Object.assign({ host, level: l, short_message: message }, others);
     try {
-        let result = yield axios_1.default.post(graylogURL, body);
+        let result = yield axios.post(graylogURL, body);
         if (result.status !== 202) {
             throw new Error(`send graylog data: ${JSON.stringify(result.config.data)}`);
         }

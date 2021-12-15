@@ -1,5 +1,12 @@
-import axios from 'axios';
+import http from 'http';
+import https from 'https';
+import _axios from 'axios';
 import chalk from 'chalk';
+
+const axios = _axios.create({
+  httpAgent: new http.Agent({ keepAlive: true }),
+  httpsAgent: new https.Agent({ keepAlive: true }),
+});
 
 let graylogURL = '';
 let host = '';
